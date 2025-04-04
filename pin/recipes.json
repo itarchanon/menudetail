@@ -1,0 +1,46 @@
+{
+    "recipes": [
+        {
+            "name": "Tom Yum Shrimp Soup",
+            "ingredients": ["Shrimp", "Lime", "Fish Sauce", "Cilantro"],
+            "missing": ["Mushroom", "Coconut Milk"],
+            "image": "tomyum.jpg"
+        },
+        {
+            "name": "Beef Stir Fry",
+            "ingredients": ["Beef", "Soy Sauce", "Garlic", "Onion"],
+            "missing": ["Bell Pepper"],
+            "image": "beefstirfry.jpg"
+        },
+        {
+            "name": "Chicken Caesar Salad",
+            "ingredients": ["Chicken", "Lettuce", "Caesar Dressing", "Parmesan"],
+            "missing": ["Croutons", "Bacon"],
+            "image": "chickencaesarsalad.jpg"
+        },
+        {
+            "name": "Spaghetti Carbonara",
+            "ingredients": ["Spaghetti", "Bacon", "Eggs", "Parmesan", "Garlic"],
+            "missing": ["Cream", "Black Pepper"],
+            "image": "carbonara.jpg"
+        },
+        {
+            "name": "Vegetable Stir Fry",
+            "ingredients": ["Carrot", "Broccoli", "Bell Pepper", "Soy Sauce", "Garlic"],
+            "missing": ["Ginger", "Tofu"],
+            "image": "vegetablestirfry.jpg"
+        },
+        {
+            "name": "Grilled Cheese Sandwich",
+            "ingredients": ["Bread", "Cheese", "Butter"],
+            "missing": ["Tomato Soup", "Pickles"],
+            "image": "grilledcheese.jpg"
+        },
+        {
+            "name": "Chicken Tacos",
+            "ingredients": ["Chicken", "Taco Shells", "Lettuce", "Cheese", "Salsa"],
+            "missing": ["Guacamole", "Sour Cream"],
+            "image": "chickentacos.jpg"
+        }
+    ]
+}
