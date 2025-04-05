@@ -1,3 +1,4 @@
+/* ========= Base Styles ========= */
 body {
     font-family: 'Segoe UI', sans-serif;
     margin: 0;
@@ -5,6 +6,7 @@ body {
     background: #fffaf5;
 }
 
+/* ========= Header ========= */
 header {
     background: #fde8cd;
     padding: 15px 30px;
@@ -21,9 +23,10 @@ nav a {
     font-size: 16px;
 }
 
+/* ========= Sidebar ========= */
 #sidebar {
     width: 260px;
-    background: #6c5ce7;
+    background: #4A4F87;
     color: white;
     padding: 15px;
     position: fixed;
@@ -33,16 +36,16 @@ nav a {
 }
 
 body.sidebar-closed #sidebar {
-    width: 60px; /* เหลือแค่ 60px เพื่อเห็นปุ่ม toggle */
+    width: 60px;
     overflow: hidden;
 }
 
 body.sidebar-closed #ingredients-list > *:not(.ingredients-header) {
-    display: none; /* ซ่อนเนื้อหาทั้งหมด ยกเว้นปุ่ม toggle */
+    display: none;
 }
 
 #toggleSidebar {
-    background: #6c5ce7;
+    background: #4A4F87;
     color: white;
     border: none;
     font-size: 24px;
@@ -54,15 +57,25 @@ body.sidebar-closed #ingredients-list > *:not(.ingredients-header) {
 }
 
 #toggleSidebar:hover {
-    background: #594ad0;
+    background: #3f4475;
 }
 
+/* Ensure the toggle button stays visible even when sidebar is closed */
+body.sidebar-closed #toggleSidebar {
+    display: block;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+/* ========= Main Content ========= */
 #content {
     margin-left: 280px;
     padding: 30px;
     flex-grow: 1;
 }
 
+/* ========= Ingredient Section ========= */
 .ingredients-header {
     display: flex;
     justify-content: space-between;
@@ -75,9 +88,31 @@ body.sidebar-closed #ingredients-list > *:not(.ingredients-header) {
 }
 
 body.sidebar-closed #select-ingredients-text {
-    opacity: 0; /* ซ่อนข้อความ "Select Ingredients" */
+    opacity: 0;
 }
 
+/* ========= Ingredient Buttons ========= */
+.ingredient-btn {
+    background: #ffe0dc;
+    color: #5a3e36;
+    border-radius: 25px;
+    padding: 10px 18px;
+    margin: 5px 8px 10px 0;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.ingredient-btn:hover {
+    background: #ffb8ad;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ========= Selected Ingredients ========= */
 #selected-ingredients {
     background: #fff3e6;
     padding: 20px;
@@ -113,20 +148,25 @@ body.sidebar-closed #select-ingredients-text {
     cursor: pointer;
 }
 
+/* ========= Search Section ========= */
 #search-section {
     display: flex;
-    gap: 15px;
+    flex-direction: column;
+    align-items: center;
     margin-bottom: 20px;
 }
 
-#search-btn, #random-btn, #how-to-cook {
-    flex: 1;
+#search-btn,
+#reset-btn {
+    width: 50%;
     padding: 12px;
+    margin: 10px 0;
     border: none;
     font-size: 16px;
     cursor: pointer;
     border-radius: 10px;
-    transition: 0.2s;
+    transition: all 0.2s ease;
+    text-align: center;
 }
 
 #search-btn {
@@ -134,31 +174,117 @@ body.sidebar-closed #select-ingredients-text {
     color: white;
 }
 
-#random-btn {
-    background: #9c88ff;
+#reset-btn {
+    background: #667CA2;
     color: white;
 }
 
-#search-btn:hover, #random-btn:hover {
+/* Button Hover Effects */
+#search-btn:hover,
+#reset-btn:hover {
     opacity: 0.9;
 }
 
+/* Active Click (Cute squish!) */
+#search-btn:active,
+#reset-btn:active {
+    transform: scale(0.97);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) inset;
+}
+
+/* ========= Recipe Result ========= */
 #recipe-result {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
+    background: #fff;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* Corrected box shadow here */
+    margin: 30px auto; /* Centering the card */
+    width: 90%;
+    max-width: 500px;
+    text-align: left; /* Ensures content is left-aligned */
     display: none;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
 #recipe-image {
     width: 100%;
     height: auto;
     border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+#recipe-name {
+    font-size: 22px;
+    font-weight: bold;
+    color: #5c4d3b;
+    margin-bottom: 10px;
+}
+
+#recipe-ingredients,
+#recipe-missing {
+    font-size: 16px;
+    color: #777;
     margin-bottom: 15px;
 }
 
+#recipe-ingredients {
+    font-weight: bold;
+    color: #5a3e36;
+}
+
+#recipe-missing {
+    font-weight: bold;
+    color: #d9534f;
+}
+
+/* How to Cook Button */
 #how-to-cook {
     background: #f7c59f;
     color: #333;
+    border: none;
+    padding: 15px;
+    margin-top: 20px;
+    width: 50%;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 25px;
+    transition: opacity 0.3s;
+    display: inline-block;
+    text-align: center;
+}
+
+#how-to-cook:hover {
+    opacity: 0.9;
+}
+
+/* Add a cute shadow around the card */
+#recipe-result {
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* More prominent shadow to make it pop */
+}
+
+#recipe-name,
+#recipe-ingredients,
+#recipe-missing {
+    line-height: 1.5;
+}
+
+/* Responsive adjustments for recipe card */
+@media (max-width: 600px) {
+    #recipe-result {
+        width: 95%;
+        padding: 20px;
+    }
+
+    #recipe-name {
+        font-size: 20px;
+    }
+
+    #recipe-ingredients,
+    #recipe-missing {
+        font-size: 14px;
+    }
+
+    #how-to-cook {
+        padding: 12px;
+        font-size: 14px;
+    }
 }
