@@ -2,12 +2,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const selectedList = document.getElementById("selected-list");
     const ingredientButtons = document.querySelectorAll(".ingredient-btn");
     const searchBtn = document.getElementById("search-btn");
-    const randomBtn = document.getElementById("random-btn");
+    const resetBtn = document.getElementById("reset-btn");
     const recipeResult = document.getElementById("recipe-result");
+    const howToCookBtn = document.getElementById("how-to-cook");
     const toggleSidebarBtn = document.getElementById("toggleSidebar");
 
     let selectedIngredients = [];
 
+    // Ingredient button click event
     ingredientButtons.forEach(button => {
         button.addEventListener("click", () => {
             if (!selectedIngredients.includes(button.innerText)) {
@@ -17,6 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    // Update the selected ingredients list
     function updateSelectedIngredients() {
         selectedList.innerHTML = "";
         selectedIngredients.forEach(ingredient => {
@@ -36,8 +39,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Search button click event
     searchBtn.addEventListener("click", () => {
-        fetch("recipes.json")
+        fetch("recipes.json")  // Replace with actual JSON or API endpoint
             .then(response => response.json())
             .then(data => {
                 const matchedRecipes = data.recipes.filter(recipe =>
@@ -45,66 +49,64 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
 
                 if (matchedRecipes.length > 0) {
-                    displayRecipes(matchedRecipes);
+                    displayRecipe(matchedRecipes);  // Show all matched recipes
                 } else {
                     alert("No matching recipes found!");
                 }
             });
     });
 
-    randomBtn.addEventListener("click", () => {
-        fetch("recipes.json")
-            .then(response => response.json())
-            .then(data => {
-                const randomRecipe = data.recipes[Math.floor(Math.random() * data.recipes.length)];
-                const missing = randomRecipe.ingredients.filter(ing => !selectedIngredients.includes(ing));
-                randomRecipe.missing = missing;
-                displayRecipe(randomRecipe);
-            });
+    // Reset button click event
+    resetBtn.addEventListener("click", () => {
+        selectedIngredients = [];
+        updateSelectedIngredients();
+        recipeResult.style.display = "none";  // Hide recipe result
+        howToCookBtn.style.display = "none"; // Hide "How to Cook" button
     });
 
-    function displayRecipes(recipes) {
-        const resultsContainer = document.getElementById("recipe-result");
-        resultsContainer.innerHTML = "";
-        recipes.forEach(recipe => {
-            const recipeDiv = document.createElement("div");
-            recipeDiv.classList.add("recipe");
+    // Display recipe function
+    function displayRecipe(recipes) {
+        recipeResult.style.display = "block";  // Show the recipe result section
+        howToCookBtn.style.display = "inline-block"; // Show the "How to Cook" button
 
-            const recipeName = document.createElement("h4");
-            recipeName.textContent = recipe.name;
+        // Clear existing recipe information
+        const recipeContainer = document.getElementById("recipe-result");
+        recipeContainer.innerHTML = "<h3>Recipe(s)</h3>";  // Add a title for the recipe section
+
+        // Display each matching recipe
+        recipes.forEach(recipe => {
+            const recipeCard = document.createElement("div");
+            recipeCard.classList.add("recipe-card");
 
             const recipeImage = document.createElement("img");
             recipeImage.src = recipe.image;
             recipeImage.alt = recipe.name;
-            recipeImage.style.width = "100%";
-            recipeImage.style.height = "auto";
-            recipeImage.style.borderRadius = "10px";
+
+            const recipeName = document.createElement("p");
+            recipeName.innerHTML = `<strong>Name:</strong> ${recipe.name}`;
 
             const recipeIngredients = document.createElement("p");
             recipeIngredients.innerHTML = `<strong>Ingredients:</strong> ${recipe.ingredients.join(", ")}`;
 
-            const missingIngredients = document.createElement("p");
-            missingIngredients.innerHTML = `<strong>Missing Ingredients:</strong> ${recipe.missing.join(", ")}`;
+            const recipeMissing = document.createElement("p");
+            recipeMissing.innerHTML = `<strong>Missing Ingredients:</strong> ${recipe.missing ? recipe.missing.join(", ") : "None"}`;
 
-            recipeDiv.appendChild(recipeName);
-            recipeDiv.appendChild(recipeImage);
-            recipeDiv.appendChild(recipeIngredients);
-            recipeDiv.appendChild(missingIngredients);
+            recipeCard.appendChild(recipeImage);
+            recipeCard.appendChild(recipeName);
+            recipeCard.appendChild(recipeIngredients);
+            recipeCard.appendChild(recipeMissing);
 
-            resultsContainer.appendChild(recipeDiv);
+            recipeContainer.appendChild(recipeCard);
         });
-        resultsContainer.style.display = "block";
     }
 
-    function displayRecipe(recipe) {
-        document.getElementById("recipe-name").textContent = recipe.name;
-        document.getElementById("recipe-ingredients").textContent = selectedIngredients.filter(i => recipe.ingredients.includes(i)).join(", ");
-        document.getElementById("recipe-missing").textContent = recipe.missing.join(", ");
-        document.getElementById("recipe-image").src = recipe.image;
-        recipeResult.style.display = "block";
-    }
-
+    // Toggle sidebar visibility
     toggleSidebarBtn.addEventListener("click", () => {
         document.body.classList.toggle("sidebar-closed");
+    });
+
+    // How to cook button click event (you can add a specific functionality here)
+    howToCookBtn.addEventListener("click", () => {
+        alert("Instructions for cooking will be displayed here.");
     });
 });
