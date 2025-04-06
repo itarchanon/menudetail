@@ -4,21 +4,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const searchBtn = document.getElementById("search-btn");
     const resetBtn = document.getElementById("reset-btn");
     const recipeResult = document.getElementById("recipe-result");
-    const howToCookBtn = document.getElementById("how-to-cook");
     const toggleSidebarBtn = document.getElementById("toggleSidebar");
 
     let selectedIngredients = [];
 
-    // Restore Sidebar State
-    if (localStorage.getItem("sidebarClosed") === "true") {
-        document.body.classList.add("sidebar-closed");
-    }
-
+    // Sidebar toggle
     toggleSidebarBtn.addEventListener("click", () => {
         document.body.classList.toggle("sidebar-closed");
-        localStorage.setItem("sidebarClosed", document.body.classList.contains("sidebar-closed"));
     });
 
+    // Select ingredient
     ingredientButtons.forEach(button => {
         button.addEventListener("click", () => {
             if (!selectedIngredients.includes(button.innerText)) {
@@ -47,6 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Search recipe
     searchBtn.addEventListener("click", () => {
         fetch("recipes.json")
             .then(response => response.json())
@@ -60,7 +56,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else {
                     alert("No matching recipes found!");
                     recipeResult.style.display = "none";
-                    howToCookBtn.style.display = "none";
                 }
             })
             .catch(error => {
@@ -69,17 +64,17 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     });
 
+    // Reset
     resetBtn.addEventListener("click", () => {
         selectedIngredients = [];
         updateSelectedIngredients();
         recipeResult.style.display = "none";
         recipeResult.innerHTML = "";
-        howToCookBtn.style.display = "none";
     });
 
+    // Show recipes
     function displayRecipe(recipes) {
         recipeResult.style.display = "block";
-        howToCookBtn.style.display = "inline-block";
         recipeResult.innerHTML = "<h3>Recipe(s)</h3>";
 
         recipes.forEach(recipe => {
@@ -102,18 +97,23 @@ document.addEventListener("DOMContentLoaded", () => {
             const recipeMissing = document.createElement("p");
             recipeMissing.innerHTML = `<strong>Missing Ingredients:</strong> ${recipe.missing ? recipe.missing.join(", ") : "None"}`;
 
+            // ✅ Create how-to-cook button dynamically
+            const howToCookBtn = document.createElement("button");
+            howToCookBtn.textContent = "How to cook";
+            howToCookBtn.classList.add("how-to-cook-btn");
+            howToCookBtn.addEventListener("click", () => {
+                window.location.href = "menu.html";
+            });
+
             recipeCard.appendChild(recipeImage);
             recipeCard.appendChild(recipeName);
             recipeCard.appendChild(recipeIngredients);
             recipeCard.appendChild(recipeMissing);
+            recipeCard.appendChild(howToCookBtn);
 
             recipeResult.appendChild(recipeCard);
         });
     }
-
-    howToCookBtn.addEventListener("click", () => {
-        alert("Instructions for cooking will be displayed here.");
-    });
 
     const topMenuSearch = document.getElementById("menu-search");
     const sidebar = document.getElementById("sidebar");
@@ -124,10 +124,6 @@ document.addEventListener("DOMContentLoaded", () => {
             e.preventDefault();
             sidebar.style.display = "block";
             content.style.display = "block";
-
-            // ถ้ามีคลาส .hidden หรือ class ปิดซ่อนไว้ ให้ลบออกได้
-            // sidebar.classList.remove("hidden");
-            // content.classList.remove("hidden");
         });
     }
 });
