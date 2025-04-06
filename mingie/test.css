@@ -1,0 +1,315 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f6f2ed;
+}
+
+header {
+    background: #e9dfc1;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+    max-width: 1140px;
+    margin: 0 auto;
+}
+
+nav {
+    padding: 0.5rem;
+    background-color: #e8e4c8;
+    position: fixed; /* ทำให้แถบเมนูติดอยู่บนสุด */
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #e9dfc1; /* ใส่สีพื้นหลังเพื่อให้แถบเมนูมองเห็นชัดเจน */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* เพิ่มเงาให้แถบเมนูดูเด่น */
+    z-index: 1000;
+}
+
+.nav-con {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1rem;
+}
+
+.logo a {
+    margin-left: -10rem;
+    font-size: 2rem;
+    color: #667ca2;
+    text-decoration: none;
+}
+
+.menu {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    margin-right: -10rem;
+}
+
+.menu li {
+    margin: 0 1rem;
+}
+
+.menu li a {
+    color: #667ca2;
+    text-decoration: none;
+}
+
+/* ========= Sidebar ========= */
+#sidebar {
+    left: 0;
+    top: 70px;
+    width: 320px;
+    background: #3f3e78;
+    color: white;
+    padding: 20px 15px;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    transition: transform 0.3s ease-in-out;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 1000;
+}
+
+body.sidebar-closed #sidebar {
+    transform: translateX(-280px); 
+    overflow: hidden; /* ซ่อนเนื้อหาที่เกินขอบ */
+}
+
+body.sidebar-closed #sidebar * {
+    opacity: 0; /* ทำให้เนื้อหาด้านใน sidebar โปร่งใส */
+    pointer-events: none; /* ป้องกันการคลิกเนื้อหาด้านใน */
+}
+
+body.sidebar-open #sidebar * {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* ปุ่ม toggle ด้านข้าง sidebar */
+#toggleSidebar {
+    position: absolute;
+    top: 10px;
+    right: -45px; /* ทำให้ปุ่มเลื่อนออกจากขอบขวาของ sidebar */
+    background: #3f3e78;
+    color: white;
+    border-radius: 0 5px 5px 0;
+    border: none;
+    padding: 12px 15px;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    z-index: 1101; /* ต้องมากกว่า z-index ของ sidebar เพื่อให้ปุ่มอยู่ข้างบน */
+    transition: right 0.3s ease; /* ทำให้ปุ่มเคลื่อนที่ได้ */
+}
+
+/* เมื่อ Sidebar เปิด, ปุ่มยังคงอยู่ที่ขอบ */
+body.sidebar-open #toggleSidebar {
+    right: -45px; /* ปุ่มยังคงอยู่ที่ขอบขวานอก sidebar */
+}
+
+/* เมื่อ Sidebar ปิด, ปุ่มยังคงออกมาที่ขอบขวานอก Sidebar */
+body.sidebar-closed #toggleSidebar {
+    right: -45px;
+}
+
+
+/* ========= Ingredient Section ========= */
+.ingredients-header {
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    margin: 15px 0 10px;
+    color: #2e2e5e;
+}
+
+.ingredient-category {
+    background: white;
+    color: #3f3e78;
+    border-radius: 20px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.ingredient-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* ========= Ingredient Buttons ========= */
+.ingredient-btn {
+    background: #f0f0f0;
+    color: #333;
+    border-radius: 20px;
+    padding: 8px 14px;
+    margin: 6px 6px 10px 0;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.ingredient-btn:hover {
+    background: #d1cfd4;
+    color: #1e1e1e;
+}
+
+/* ========= Main Content ========= */
+#content {
+    margin-left: 280px;
+    padding: 30px;
+    transition: margin-left 0.3s ease-in-out;
+    padding-top: 130px;
+}
+
+/* ถ้า sidebar ปิดให้ content ขยับซ้าย */
+body.sidebar-closed #content {
+    margin-left: 20px;
+}
+
+/* ========= Selected Ingredients ========= */
+#selected-ingredients {
+    background: #fbf8f5;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    width: 100%; /* กำหนดความกว้างให้ไม่เต็มจอ */
+    max-width: 800px; /* จำกัดความกว้างสูงสุด */
+    margin: 0 auto; /* จัดให้อยู่กลางหน้าจอ */
+}
+
+#selected-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.selected-item {
+    background: #ffffff;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    font-size: 14px;
+    color: #444;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.selected-item button {
+    background: none;
+    border: none;
+    color: #b22222;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* ========= Search Section ========= */
+#search-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* จัดให้อยู่กึ่งกลางแนวขวาง */
+    justify-content: center; /* จัดให้อยู่กึ่งกลางแนวตั้ง */
+    height: 25vh; /* ให้เต็มหน้าจอ */
+    gap: 5px; /* เพิ่มช่องว่างระหว่างปุ่ม */
+}
+
+#search-btn {
+    background: #4b3934;
+    color: white;
+}
+
+#reset-btn {
+    background: #667ca2;
+    color: white;
+}
+
+#search-btn,
+#reset-btn {
+    width: 200px;
+    padding: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+    margin-bottom: 10px; /* เพิ่มระยะห่างระหว่างปุ่ม */
+}
+
+/* ========= Recipe Result ========= */
+#recipe-result {
+    background: #fff;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    margin: 30px auto;
+    width: 90%;
+    max-width: 700px;
+    min-height: 250px;
+    height: auto;
+    text-align: left;
+}
+  
+.recipe-container {
+    display: flex;
+    align-items: stretch; /* ทำให้รูปสูงเท่ากับฝั่งข้อความ */
+    gap: 30px;
+    height: 100%; /* ยืดตาม container */
+}
+  
+#recipe-image {
+    flex: 0 0 35%; /* รูปกินพื้นที่ 35% ด้านซ้าย */
+    aspect-ratio: 1 / 1; /* รักษาสัดส่วนให้เป็นจัตุรัส */
+    object-fit: cover;
+    border-radius: 10px;
+    background: #ccc;
+}
+  
+.recipe-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    color: #3e4784;
+    font-size: 16px;
+}
+  
+.recipe-text p {
+    margin: 0;
+}
+  
+#how-to-cook {
+    position: absolute;
+    bottom: 0;
+    left: 60%;
+    transform: translateX(-50%);
+    background: #E8E4C8;
+    color: #667CA2;
+    border: none;
+    padding: 12px 25px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 25px;
+    transition: opacity 0.3s;
+    width: fit-content;
+}
+  
+#how-to-cook:hover {
+    opacity: 0.9;
+}
+  
