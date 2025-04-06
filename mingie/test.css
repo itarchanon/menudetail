@@ -62,66 +62,49 @@ nav {
 
 /* ========= Sidebar ========= */
 #sidebar {
-    left: 0;
+    width: 260px;
     top: 70px;
-    width: 320px;
-    background: #3f3e78;
+    background: #4A4F87;
     color: white;
-    padding: 20px 15px;
+    padding: 15px;
     position: fixed;
     height: 100vh;
     overflow-y: auto;
-    transform: translateX(-100%);
     transition: transform 0.3s ease-in-out;
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
-    z-index: 1000;
 }
-
-#sidebar.active {
-    transform: translateX(0);
-  }
 
 body.sidebar-closed #sidebar {
-    transform: translateX(-280px); 
-    overflow: hidden; /* ซ่อนเนื้อหาที่เกินขอบ */
+    width: 60px;
+    overflow: hidden;
 }
 
-body.sidebar-closed #sidebar * {
-    opacity: 0; /* ทำให้เนื้อหาด้านใน sidebar โปร่งใส */
-    pointer-events: none; /* ป้องกันการคลิกเนื้อหาด้านใน */
-} 
-
-body.sidebar-open #sidebar * {
-    opacity: 1;
-    pointer-events: auto;
+body.sidebar-closed #ingredients-list > *:not(.ingredients-header) {
+    display: none;
 }
 
-/* ปุ่ม toggle ด้านข้าง sidebar */
 #toggleSidebar {
-    position: absolute;
-    top: 10px;
-    right: -45px; /* ทำให้ปุ่มเลื่อนออกจากขอบขวาของ sidebar */
-    background: #3f3e78;
+    background: #4A4F87;
     color: white;
-    border-radius: 0 5px 5px 0;
     border: none;
-    padding: 12px 15px;
+    font-size: 24px;
+    padding: 6px 12px;
+    border-radius: 8px;
     cursor: pointer;
-    box-shadow: 0 0 5px rgba(0,0,0,0.1);
-    z-index: 1101; /* ต้องมากกว่า z-index ของ sidebar เพื่อให้ปุ่มอยู่ข้างบน */
-    transition: right 0.3s ease; /* ทำให้ปุ่มเคลื่อนที่ได้ */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    transition: background 0.3s;
 }
 
-/* เมื่อ Sidebar เปิด, ปุ่มยังคงอยู่ที่ขอบ */
-body.sidebar-open #toggleSidebar {
-    right: -45px; /* ปุ่มยังคงอยู่ที่ขอบขวานอก sidebar */
+#toggleSidebar:hover {
+    background: #3f4475;
 }
 
-/* เมื่อ Sidebar ปิด, ปุ่มยังคงออกมาที่ขอบขวานอก Sidebar */
+/* Ensure the toggle button stays visible even when sidebar is closed */
 body.sidebar-closed #toggleSidebar {
-    right: -45px;
+    display: block;
+    position: absolute;
+    top: 20px;
+    left: 20px;
 }
-
 
 /* ========= Ingredient Section ========= */
 .ingredients-header {
@@ -195,6 +178,10 @@ body.sidebar-closed #content {
     width: 100%; /* กำหนดความกว้างให้ไม่เต็มจอ */
     max-width: 800px; /* จำกัดความกว้างสูงสุด */
     margin: 0 auto; /* จัดให้อยู่กลางหน้าจอ */
+}
+
+body.sidebar-closed #select-ingredients-text {
+    opacity: 0;
 }
 
 #selected-list {
