@@ -114,4 +114,20 @@ document.addEventListener("DOMContentLoaded", () => {
     howToCookBtn.addEventListener("click", () => {
         alert("Instructions for cooking will be displayed here.");
     });
+
+    const topMenuSearch = document.getElementById("menu-search");
+    const sidebar = document.getElementById("sidebar");
+    const content = document.getElementById("content");
+
+    if (topMenuSearch) {
+        topMenuSearch.addEventListener("click", (e) => {
+            e.preventDefault();
+            sidebar.style.display = "block";
+            content.style.display = "block";
+
+            // ถ้ามีคลาส .hidden หรือ class ปิดซ่อนไว้ ให้ลบออกได้
+            // sidebar.classList.remove("hidden");
+            // content.classList.remove("hidden");
+        });
+    }
 });
